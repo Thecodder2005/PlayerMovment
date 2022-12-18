@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerManager : MonoBehaviour
+{
+public GameObject boat;
+public GameObject anchor;
+public Transform teleportTarget;
+public GameObject player;
+public Animator animator1;
+
+
+public float  axaY = 1;
+
+private void Start() {
+    anchor.SetActive(false);
+}
+
+  
+
+    // Update is called once per frame
+    void Update()
+    { 
+        //verificam daca a apasat space 
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            anchor.SetActive(false);
+            player.transform.position = teleportTarget.transform.position;
+            ChangeParent();
+        
+        boat.transform.position = player.transform.position - new Vector3(0, axaY, 0);
+        
+        }
+        // Daca apesi space esti teleportat la barca 
+        else if(Input.GetKeyDown(KeyCode.Q))
+        {
+            ParentDetach();
+           
+           anchor.SetActive(true);
+         
+        }
+        //Daca apeso Q esti detasat de barca si crouch se dezactiveaza 
+    }
+    // Atasam barca la player 
+    void ChangeParent()
+    {
+        boat.transform.parent = player.transform;
+    }
+    //Detasam barca de player 
+    void ParentDetach()
+    {
+        boat.transform.parent = null;
+    }
+   
+  
+
+private Inventory inventory;
+
+ void Awake() 
+ {
+    inventory = new Inventory();
+ }
+  
+}
